@@ -3,6 +3,9 @@ import vcnav from './MainComponents/nav.js'
 import homePage from './MainComponents/contentComponents/homePage.js'
 import vcfooter from './MainComponents/footer.js'
 import * as db from './DBprovider.js'
+import vcdetailFilm from './MainComponents/contentComponents/detailFilm.js'
+import vcspinner from './MainComponents/spinner.js'
+import vcsearchFilm from './MainComponents/contentComponents/searchFilm.js'
 import { computed } from 'vue';
 export default {
     data() {
@@ -10,7 +13,10 @@ export default {
             currentContent: 'homePage',
             newFilm: [],
             popularFilm: [],
-            top50Film: []
+            top50Film: [],
+            darkMode: false,
+            detailFilm: {},
+            searchFilm: []
         }
     }
     ,
@@ -26,7 +32,48 @@ export default {
         async getTop50Film() {
             const data = await db.fetchFilmData('get/top50');
             this.top50Film = data;
+        },
+        async getFilm(id) {
+            const data = await db.fetchFilmData('detail/movie/' + id);
+            this.detailFilm = data;
+        },
+        async getSearchFilm(searchData) {
+            const data = await db.fetchFilmData('search/movie/' + searchData);
+            this.searchFilm = data;
+        },
+        toggleDarkMode() {
+            this.darkMode = !this.darkMode;
         }
+        ,
+        async getDetailFilm(film) {
+            await this.getFilm(film.id);
+            console.log(film);
+
+            console.log(this.detailFilm);
+            if (!this.detailFilm) {
+                this.detailFilm = film;
+            }
+            this.currentContent = 'vcdetailFilm';
+        },
+        sleep() {
+            return new Promise(resolve => {
+                setTimeout(function () { resolve("oke"); }, 300);
+            })
+        }
+        ,
+        async comeBackHome() {
+            this.currentContent = 'vcspinner';
+            await this.sleep();
+            this.currentContent = 'homePage';
+        }
+        ,
+        async searchResponse(searchData) {
+            console.log(searchData);
+            await this.getSearchFilm(searchData);
+            console.log(this.searchFilm);
+            this.currentContent = 'vcsearchFilm';
+        }
+
     }
     ,
     mounted() {
@@ -39,24 +86,33 @@ export default {
         return {
             newFilm: computed(() => this.newFilm),
             popularFilm: computed(() => this.popularFilm),
-            top50Film: computed(() => this.top50Film)
+            top50Film: computed(() => this.top50Film),
+            darkMode: computed(() => this.darkMode),
+            detailFilm: computed(() => this.detailFilm),
+            searchFilm: computed(() => this.searchFilm)
         }
     },
 
     computed:
     {
-
+        DarkMode() {
+            if (this.darkMode) {
+                return 'dark';
+            }
+            return 'light';
+        }
     },
 
-    components: { vcheader, vcnav, vcfooter, homePage },
+    components: { vcheader, vcnav, vcfooter, homePage, vcdetailFilm, vcspinner, vcsearchFilm },
     template: `
+    <div  style="width:100wh;" :class="{dark:darkMode==true}">
+        <vcheader @toggleDarkMode="toggleDarkMode" :data-bs-theme="DarkMode" />
 
-        <vcheader/>
+       <vcnav :data-bs-theme="DarkMode" @comebackHome = 'comeBackHome' @searchRequest = 'searchResponse'/>
 
-       <vcnav/> 
-
-        <component :is='currentContent'> </component>
+        <component :is='currentContent' @detailFilm="getDetailFilm" > </component>
       
-        <vcfooter/>
+        <vcfooter :data-bs-theme="DarkMode"/>
+    </div>
         `
 }

@@ -11,8 +11,8 @@ export default {
             <div>
                 <span>21170</span>
                 <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
-                        <label class="form-check-label" for="flexSwitchCheckDefault">Dark Mode</label>
+                    <input class="form-check-input" @click="$emit('toggleDarkMode')" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+                        <label   class="form-check-label" for="flexSwitchCheckDefault">Dark Mode</label>
                 </div>
             </div>
         </div>

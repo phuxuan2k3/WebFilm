@@ -8,16 +8,43 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
   <style>
-    .top-right {
-      position: relative;
-      top: -50px;
-      right: -50px;
+    .dark {
+      background-color: black;
+      color: white;
+    }
+
+    .big {
+      height: 600px;
+      transition: width 2s;
+      transition: height 1s;
+    }
+
+    .small {
+      height: 400px;
+      transition: height 1s;
+    }
+
+    .important {
+      width: 400px;
+      height: 500px;
+      transition: width 2s;
+      transition: height 1s;
+    }
+
+    .fade-enter-active,
+    .fade-leave-active {
+      transition: opacity 0.5s ease;
+    }
+
+    .fade-enter-from,
+    .fade-leave-to {
+      opacity: 0;
     }
   </style>
 </head>
 
 <body style="background-color: darkgray;">
-  <div id="app" class="container-fluid">
+  <div id="app" class="container-fluid p-0">
   </div>
 
 

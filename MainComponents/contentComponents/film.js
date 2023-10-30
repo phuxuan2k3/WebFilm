@@ -1,14 +1,15 @@
 export default {
     data() {
         return {
+            upHere: false
         }
     }
     ,
     methods: {
         foo() {
-            console.log(this.data);
+            //console.log(this.data);
         },
-        parseData() {
+        imgFilm() {
             try {
                 return this.data.image;
             }
@@ -16,10 +17,29 @@ export default {
 
             }
 
+        },
+        sendRequestDetail() {
+            this.$emit('detailFilm',this.data);
         }
     },
-    props: ['data']
+    computed: {
+        fullTitleFilm() {
+            if (this.data) {
+                return this.data.fullTitle;
+            }
+            return "";
+        }
+    },
+    props: ['data', 'isImportant']
     ,
-    template: ` <img :src="parseData()" @click="foo" alt="...">
-`
+    template: ` 
+        <div class="d-flex flex-column">
+        <img :src="imgFilm()" @click="sendRequestDetail" alt="..."  @mouseover="upHere = true" @mouseleave="upHere = false"  :class='{big:upHere,small:!upHere}'>
+        <Transition name="fade">
+         <span v-if="upHere" class="card d-inline">
+                {{fullTitleFilm}}
+            </span>
+        </Transition>
+        </div>
+        `
 }

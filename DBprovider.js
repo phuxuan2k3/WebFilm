@@ -15,6 +15,35 @@ export function fetchFilmData(url) {
             else if (urlComs[1] == 'top50') {
                 resolve(data.Top50Movies);
             }
+        } else if (urlComs[0] == 'detail') {
+            if (urlComs[1] == 'movie') {
+                data.Movies.forEach(ele => {
+                    if (ele.id == urlComs[2]) {
+                        resolve(ele);
+                    }
+                })
+                resolve(undefined);
+            }
+        } else if (urlComs[0] == 'search') {
+            if (urlComs[1] == 'movie') {
+                let res = [];
+                data.Movies.forEach(ele => {
+                    if (ele.fullTitle.toLowerCase().includes(urlComs[2].toLowerCase())) {
+                        res.push(ele);
+                    }
+                })
+                data.MostPopularMovies.forEach(ele => {
+                    if (ele.fullTitle.toLowerCase().includes(urlComs[2].toLowerCase())) {
+                        res.push(ele);
+                    }
+                })
+                data.Top50Movies.forEach(ele => {
+                    if (ele.fullTitle.toLowerCase().includes(urlComs[2].toLowerCase())) {
+                        res.push(ele);
+                    }
+                })
+                resolve(res);
+            }
         }
     })
 

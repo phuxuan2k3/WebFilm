@@ -9,6 +9,9 @@ export default {
     }
     ,
     inject: {
+        darkMode: {
+            from: `darkMode`
+        },
         newFilm: {
             from: `newFilm`
         },
@@ -28,7 +31,10 @@ export default {
         foo() {
             console.log(this.top50Film);
         },
+        getDetailFilm(film) {
+            this.$emit('detailFilm', film);
 
+        },
         getPopularFilm(i, j) {
             let index = i * 3;
             if (j == 1) {
@@ -51,16 +57,25 @@ export default {
     ,
     components: { film }
     ,
+    computed:
+    {
+        DarkMode() {
+            if (this.darkMode) {
+                return 'dark';
+            }
+            return 'light';
+        }
+    },
     template: `
-        <div class="content mt-1">
+        <div class="content mt-1"  >
 
-            <div id="newFilmCarousel" class="carousel slide" data-bs-ride="carousel">
+            <div id="newFilmCarousel" class="carousel slide">
                 <div class="carousel-indicators">
                     <button type="button" data-bs-target="#newFilmCarousel" :data-bs-slide-to="index" :class="{active:index===currentNewFilm}" v-for="(item, index) in newFilm"></button>
                 </div>
                 <div class="carousel-inner text-center">
                     <div  data-bs-interval="3000" class="carousel-item" :class="{active:index===currentNewFilm}" v-for="(item,index) in newFilm">
-                    <film  class="m-auto col-3 rounded-3" style="height:500px" :data="item" />
+                    <film  @detailFilm="getDetailFilm" class="m-auto col-3 rounded-3" :data="item" isImportant="true" />
                     </div>
                 </div>
                 <button class="carousel-control-prev" type="button" data-bs-target="#newFilmCarousel" data-bs-slide="prev">
@@ -74,19 +89,21 @@ export default {
             </div>
 
 
-            <div id="popularFilmCarousel" class="carousel slide mt-5" data-bs-ride="carousel" >
+            <div id="popularFilmCarousel" class="carousel slide mt-5"  >
 
-                <div class="d-flex justify-content-between">
-                    <div> Most popular</div>
-                    <div class="carousel-indicators position-static m-0">
+                <div class="d-flex justify-content-between" >
+                    <div :class="{dark:darkMode==true}"> Most popular</div>
+                    <div class="carousel-indicators position-static m-0" >
                         <button type="button" data-bs-target="#popularFilmCarousel" :data-bs-slide-to="index-1" :class="{active:index-1===currentPopularFilmPage}" v-for="index in 5"></button>
                     </div>
                 </div>
 
                 <div class="carousel-inner text-center">
 
-                    <div class="carousel-item " data-bs-interval="3000" :class="{active:i-1===currentPopularFilmPage}" v-for="i in 5">
-                        <film class="col-3 rounded-3" style="height:300px"  v-for="j in 3" :data="getPopularFilm(i,j)" />
+                    <div class="carousel-item" data-bs-interval="3000" :class="{active:i-1===currentPopularFilmPage}" v-for="i in 5">
+                        <div class = "d-flex justify-content-center">
+                        <film @detailFilm="getDetailFilm" class="col-3 rounded-3"  v-for="j in 3" :data="getPopularFilm(i,j)" />
+                        </div>
                     </div>
 
 
@@ -102,10 +119,10 @@ export default {
             </div>
 
 
-            <div id="topratingFilmCarousel" class="carousel slide mt-5" data-bs-ride="carousel" @click="foo">
+            <div id="topratingFilmCarousel" class="carousel slide mt-5"  @click="foo">
 
                 <div class="d-flex justify-content-between">
-                    <div> Top rating</div>
+                    <div :class="{dark:darkMode==true}"> Top rating</div>
                     <div class="carousel-indicators position-static m-0">
                         <button type="button" data-bs-target="#topratingFilmCarousel" :data-bs-slide-to="index-1" :class="{active:index-1===currentPopularFilmPage}" v-for="index in 5"></button>
                     </div>
@@ -114,7 +131,9 @@ export default {
                 <div class="carousel-inner text-center">
 
                     <div class="carousel-item " data-bs-interval="3000" :class="{active:i-1===currentPopularFilmPage}" v-for="i in 5">
-                        <film class="col-3 rounded-3" style="height:300px"  v-for="j in 3" :data="getTop50Film(i,j)" />
+                        <div class = "d-flex justify-content-center">
+                            <film @detailFilm="getDetailFilm" class="col-3 rounded-3"  v-for="j in 3" :data="getTop50Film(i,j)" />
+                        </div>
                     </div>
 
 
