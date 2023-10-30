@@ -16,6 +16,7 @@ export default {
             top50Film: [],
             darkMode: false,
             detailFilm: {},
+            reviewFilm: [],
             searchFilm: []
         }
     }
@@ -35,7 +36,8 @@ export default {
         },
         async getFilm(id) {
             const data = await db.fetchFilmData('detail/movie/' + id);
-            this.detailFilm = data;
+            this.detailFilm = data.detail;
+            this.reviewFilm = data.review;
         },
         async getSearchFilm(searchData) {
             const data = await db.fetchFilmData('search/movie/' + searchData);
@@ -89,6 +91,7 @@ export default {
             top50Film: computed(() => this.top50Film),
             darkMode: computed(() => this.darkMode),
             detailFilm: computed(() => this.detailFilm),
+            reviewFilm: computed(() => this.reviewFilm),
             searchFilm: computed(() => this.searchFilm)
         }
     },

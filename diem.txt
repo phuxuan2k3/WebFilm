@@ -1,0 +1,23 @@
+1 điểm: Giao diện cơ bản với bố cục và các thành phần yêu cầu (chưa có
+dữ liệu movie, phải điền đủ các thông tin yêu cầu.
+1 điểm: thực hiện được chế độ Dark mode.
+1 điểm: hoàn thành module DB provider (hoặc DB Utility) với method fetch
+đáp ứng yêu cầu. Không hoàn thành phần này thì các phần sau KHÔNG
+tính điểm.
+1 điểm: Danh sách 5 Movie có doanh thu cao nhất hiển thị như yêu cầu
+(điều hướng chuyển movie dạng slide) với các thông tin cơ bản: poster,
+title, rated, length,…
+1 điểm: Danh sách 15~30 Movie phổ biến nhất hiển thị như yêu cầu (điều
+hướng chuyển trang dạng slide).
+1 điểm: hiệu ứng highlight khi hover Movie như yêu cầu (có thêm một số
+thông tin).
+1 điểm: Danh sách 15~30 Movie thứ hạng cao nhất hiển thị như yêu cầu
+mà KHÔNG clone code.
+1 điểm: liên kết để chuyển sang xem chi tiết Movie ở bất kỳ Movie nào trên
+bất kỳ danh sách nào
+1 điểm: Thực hiện tìm kiếm Movie theo tên và hiển thị theo dạng CardView
+với các thông tin cơ bản: poster, title, rated, length,…
+1 điểm: Xem chi tiết Movie, cần hiển thị được hình ảnh, tiêu đề, năm sản
+xuất, đạo diễn, tóm tắt, thông tin diễn viên, thể loại.
+1 điểm: Trong phần chi tiết Movie hiển thị được reviews cho Movie.
+1 điểm: thực hiện được chức năng về Home và có hiệu ứng Loading.

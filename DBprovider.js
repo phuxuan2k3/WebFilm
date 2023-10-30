@@ -17,14 +17,23 @@ export function fetchFilmData(url) {
             }
         } else if (urlComs[0] == 'detail') {
             if (urlComs[1] == 'movie') {
-                data.Movies.forEach(ele => {
-                    if (ele.id == urlComs[2]) {
-                        resolve(ele);
-                    }
-                })
-                resolve(undefined);
+                let res = { detail: '', review: '' };
+                res.detail = (data.Movies.find(function (ele) {
+                    return ele.id == urlComs[2];
+                }))
+
+                res.review = (data.Reviews.find(function (ele) {
+                    return ele.movieId == urlComs[2];
+
+                }))
+                if (res.review) {
+                    res.review = res.review.items;
+                }
+                resolve(res);
+                console.log(data);
             }
-        } else if (urlComs[0] == 'search') {
+        }
+        else if (urlComs[0] == 'search') {
             if (urlComs[1] == 'movie') {
                 let res = [];
                 data.Movies.forEach(ele => {

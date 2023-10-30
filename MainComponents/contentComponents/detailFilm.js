@@ -5,8 +5,14 @@ export default {
     }
     ,
     inject: {
+        darkMode: {
+            from: `darkMode`
+        },
         detailFilm: {
             from: `detailFilm`
+        },
+        reviewFilm: {
+            from: `reviewFilm`
         }
     },
     methods: {
@@ -23,6 +29,12 @@ export default {
                 return false;
             }
         },
+        DarkMode() {
+            if (this.darkMode) {
+                return 'dark';
+            }
+            return 'light';
+        }
     },
     props: []
     ,
@@ -88,8 +100,73 @@ export default {
                 </div>
             </div>
 
+             <div v-if="hasImages">
+                <div class="card m-2" :data-bs-theme="DarkMode">
+                    <div class="card-header">
+                        Plot
+                    </div>
+                    <div class="card-body">
+                        <blockquote class="blockquote mb-0">
+                        <p>{{detailFilm.plot}}</p>
+                        </blockquote>
+                    </div>
+                    </div>
+            </div>
+
+
+
+         <div v-if="hasImages">
+                <div class="card m-2" :data-bs-theme="DarkMode">
+                    <div class="card-header">
+                        Type
+                    </div>
+                    <div class="card-body">
+                        <blockquote class="blockquote mb-0">
+                        <p>{{detailFilm.type}}</p>
+                        </blockquote>
+                    </div>
+                    </div>
+            </div>
+
+
+
+        <div v-if="hasImages">
+                <div class="card m-2" :data-bs-theme="DarkMode">
+                    <div class="card-header">
+                        Year
+                    </div>
+                    <div class="card-body">
+                        <blockquote class="blockquote mb-0">
+                        <p>{{detailFilm.year}}</p>
+                        </blockquote>
+                    </div>
+                    </div>
+            </div>
+
+
+
+
+
+                    <div >
+                            <div class="alert alert-danger" role="alert">
+                            Review
+                            </div>
+                              <div class="card m-2" v-if="reviewFilm" v-for="(item,index) in reviewFilm" :data-bs-theme="DarkMode">
+                            <div class="card-header">
+                                Review {{index+1}}
+                            </div>
+                            <div class="card-body">
+                                <p style="font-size:20px">{{item.content}}</p>
+                            </div>
+                        </div>
+                     </div>
+
+
+
+
+
             <div>
-            
+
             </div>
 
         </div>

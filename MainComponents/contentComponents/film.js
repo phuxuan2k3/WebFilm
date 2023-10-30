@@ -19,7 +19,7 @@ export default {
 
         },
         sendRequestDetail() {
-            this.$emit('detailFilm',this.data);
+            this.$emit('detailFilm', this.data);
         }
     },
     computed: {
